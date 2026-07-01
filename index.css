@@ -1,0 +1,983 @@
+/* ==========================================================================
+   SKETCHBOOK / DOODLE LINK-IN-BIO PORTFOLIO — ZERO CLIPPING GUARANTEED
+   Inspired by Kevin Basset (kevin.tw) — Hand-Drawn Sharpie Aesthetic
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@400;700&family=Patrick+Hand&display=swap');
+
+:root {
+  /* Notebook Paper Colors */
+  --bg-desktop: #e8e8f0;
+  --paper-bg: #fffefe;
+  --paper-shadow: rgba(18, 18, 24, 0.16);
+  --line-blue: rgba(135, 180, 235, 0.55);
+  --line-red: rgba(235, 95, 115, 0.7);
+  
+  /* Ink & Shading Colors */
+  --ink-black: #161618;
+  --ink-grey: #4a4a52;
+  --box-fill-light: #f3f3f6;
+  --box-fill-hover: #e6e6ec;
+  --accent-yellow: #fff080;
+  --accent-pink: #ffd6e0;
+  --accent-blue: #d6ecff;
+  --accent-red: #eb5f73;
+  
+  /* Fonts */
+  --font-sharpie: 'Kalam', cursive, sans-serif;
+  --font-hand: 'Patrick Hand', cursive, sans-serif;
+  --font-doodle: 'Caveat', cursive, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--bg-desktop);
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--bg-desktop);
+  background-image: 
+    radial-gradient(#cacae0 1.5px, transparent 1.5px),
+    radial-gradient(#cacae0 1.5px, var(--bg-desktop) 1.5px);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+  color: var(--ink-black);
+  font-family: var(--font-hand);
+  
+  /* Custom Hand-Sketched Yellow Arrow Cursor */
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M3 3 L11 23 L14 15 L22 18 L24 14 L16 11 L22 5 Z' fill='%23fff080' stroke='%23161618' stroke-width='2.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 3, auto;
+  
+  /* Safely align from top so nothing ever gets clipped at top or bottom */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1rem 6rem 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Custom Hand-Sketched Pink Pointing Hand Hover Cursor for ALL interactive buttons! */
+a, button, .squiggly-btn, .tool-btn, .color-pick-btn, .doodle-mode-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M12 2 C10 2 9 4 9 7 L9 13 L6 13 C4 13 3 15 4 17 L8 25 C9 27 11 28 14 28 L20 28 C23 28 25 26 25 23 L26 15 C26 13 24 12 22 12 L15 12 L15 7 C15 4 14 2 12 2 Z' fill='%23ffd6e0' stroke='%23161618' stroke-width='2.2' stroke-linejoin='round'/%3E%3C/svg%3E") 12 2, pointer !important;
+}
+
+/* --- Main Notebook Paper Sheet --- */
+.notebook-sheet {
+  background-color: var(--paper-bg);
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  position: relative;
+  /* Generous padding so everything fits comfortably inside the paper */
+  padding: 2.5rem 2.5rem 4rem 4.5rem;
+  box-shadow: 
+    0 15px 35px var(--paper-shadow),
+    0 2px 5px rgba(0,0,0,0.06);
+  transform: rotate(-1deg);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), margin-top 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 6px;
+  
+  /* Ensure visible so internal hand-drawn shadows look crisp */
+  overflow: visible;
+
+  /* Lined Paper Background (Blue horizontal lines) */
+  background-image: linear-gradient(var(--line-blue) 1.2px, transparent 1.2px);
+  background-size: 100% 34px;
+  background-position: 0 1.4rem;
+}
+
+body.is-drawing .notebook-sheet {
+  margin-top: 3.8rem !important;
+}
+
+.notebook-sheet:hover {
+  transform: rotate(0deg) scale(1.002);
+}
+
+/* Red Vertical Margin Line */
+.notebook-sheet::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 3.5rem;
+  width: 2.2px;
+  background-color: var(--line-red);
+  z-index: 1;
+}
+
+/* Binder Holes on Left Margin */
+.binder-holes {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.8rem;
+  width: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 4rem 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hole {
+  width: 20px;
+  height: 20px;
+  background-color: var(--bg-desktop);
+  border-radius: 50%;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* --- Header / Profile Section --- */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.2rem;
+  position: relative;
+  z-index: 5;
+}
+
+/* Squiggly Hand-Drawn Profile Circle Border */
+.avatar-frame {
+  width: 95px;
+  height: 95px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 58% 42% 53% 67% / 62% 35% 65% 38%;
+  border: 3.5px solid var(--ink-black);
+  box-shadow: 3px 4px 0 var(--ink-black);
+  animation: squiggly-circle 4s infinite alternate ease-in-out;
+  flex-shrink: 0;
+}
+
+@keyframes squiggly-circle {
+  0% { border-radius: 58% 42% 53% 67% / 62% 35% 65% 38%; }
+  33% { border-radius: 48% 62% 35% 65% / 42% 58% 52% 60%; }
+  66% { border-radius: 42% 58% 68% 42% / 52% 42% 58% 48%; }
+  100% { border-radius: 58% 42% 53% 67% / 62% 35% 65% 38%; }
+}
+
+.avatar-svg {
+  width: 86%;
+  height: 86%;
+}
+
+.profile-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-family: var(--font-sharpie);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink-black);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transform: rotate(-1.5deg);
+  text-shadow: 1.5px 1.5px 0px rgba(0,0,0,0.08);
+}
+
+.profile-bio {
+  font-family: var(--font-doodle);
+  font-size: 1.3rem;
+  color: var(--ink-grey);
+  transform: rotate(1deg);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* --- The Link Buttons (Hand-Drawn Sharpie Rectangles) --- */
+.links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  position: relative;
+  z-index: 5;
+  list-style: none;
+}
+
+.link-item {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* Stack note cleanly above button if needed */
+  align-items: center;
+  justify-content: center;
+}
+
+.squiggly-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.8rem 1.4rem;
+  text-decoration: none;
+  color: var(--ink-black);
+  font-family: var(--font-sharpie);
+  font-size: 1.25rem;
+  font-weight: 700;
+  background-color: #fff;
+  
+  /* Chunky Sharpie ink border */
+  border: 3px solid var(--ink-black);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  box-shadow: 3px 4px 0 var(--ink-black);
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* Organic width variation */
+.link-item:nth-child(2n) .squiggly-btn { width: 98%; }
+.link-item:nth-child(3n) .squiggly-btn { width: 96%; }
+
+/* Shaded alternate buttons */
+.squiggly-btn.is-shaded {
+  background-color: var(--box-fill-light);
+}
+
+.squiggly-btn.is-highlight {
+  background-color: var(--accent-yellow);
+}
+
+.squiggly-btn.is-pink {
+  background-color: var(--accent-pink);
+}
+
+/* Hover effect: Wiggle & fill */
+.squiggly-btn:hover {
+  transform: translateY(-3px) rotate(-0.7deg) scale(1.015);
+  background-color: var(--box-fill-hover);
+  box-shadow: 4px 6px 0 var(--ink-black);
+  border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+}
+
+.squiggly-btn.is-highlight:hover {
+  background-color: #ffe853;
+}
+
+.squiggly-btn.is-pink:hover {
+  background-color: #ffc2d1;
+}
+
+.squiggly-btn:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: 1px 2px 0 var(--ink-black);
+}
+
+/* Ink Sketched Icons inside buttons */
+.btn-ink-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-ink-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: var(--ink-black);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.btn-text {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  line-height: 1.15;
+}
+
+.btn-title {
+  font-family: var(--font-sharpie);
+  font-size: 1.28rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  letter-spacing: 0.4px;
+}
+
+.btn-subtitle {
+  font-family: var(--font-doodle);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-grey);
+  margin-top: 2px;
+  letter-spacing: 0.2px;
+}
+
+/* ==========================================================================
+   AUTHENTIC SKETCHED STICKER BADGES & ANNOTATION TAGS
+   Gives every button a unique, hand-drawn paper sticker tag!
+   ========================================================================== */
+.doodle-note {
+  font-family: var(--font-doodle);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  pointer-events: none;
+  z-index: 10;
+  line-height: 1.2;
+  display: flex;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border: 2px solid var(--ink-black);
+  box-shadow: 2px 2.5px 0 var(--ink-black);
+  max-width: 90%;
+  letter-spacing: 0.3px;
+}
+
+/* Tag 1: Portfolio (Neon Yellow Pill Sticker on Left) */
+.note-portfolio {
+  justify-content: flex-start;
+  padding-left: 6px;
+}
+.note-portfolio .badge-tag {
+  background: #fff080;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transform: rotate(-2.5deg);
+  color: #161618;
+}
+
+/* Tag 2: LinkedIn (Soft Sky Blue Sticker on Right) */
+.note-linkedin {
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+.note-linkedin .badge-tag {
+  background: #d4eafc;
+  border-radius: 12px 22px 14px 20px;
+  transform: rotate(2deg);
+  color: #161618;
+}
+
+/* Tag 3: GitHub (Soft Lavender Sticker on Left) */
+.note-github {
+  justify-content: flex-start;
+  padding-left: 18px;
+}
+.note-github .badge-tag {
+  background: #eedbff;
+  border-radius: 16px 8px 18px 10px;
+  transform: rotate(-1.5deg);
+  color: #161618;
+}
+
+/* Tag 4: Blog (Soft Pink Sticker on Right) */
+.note-blog {
+  justify-content: flex-end;
+  padding-right: 6px;
+}
+.note-blog .badge-tag {
+  background: #ffd6e0;
+  border-radius: 20px 10px 24px 12px;
+  transform: rotate(2.5deg);
+  color: #161618;
+}
+
+/* Tag 5: Email (Soft Mint Green Sticker on Left) */
+.note-email {
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+.note-email .badge-tag {
+  background: #a8f0ca;
+  border-radius: 14px 20px 12px 18px;
+  transform: rotate(-2deg);
+  color: #161618;
+}
+
+/* Tag 6: Social Handles / Twitter / IG (Soft Peach Sticker on Right) */
+.note-social {
+  justify-content: flex-end;
+  padding-right: 15px;
+}
+.note-social .badge-tag {
+  background: #ffe3d1;
+  border-radius: 18px 12px 20px 14px;
+  transform: rotate(1.8deg);
+  color: #161618;
+}
+
+/* Hand-drawn mouse cursor doodle - safely positioned inside top right of button */
+.hand-drawn-cursor {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  z-index: 12;
+  transform: rotate(-15deg);
+  animation: point-bounce 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes point-bounce {
+  0% { transform: translateX(0) rotate(-15deg); }
+  100% { transform: translateX(-6px) rotate(-15deg) scale(1.1); }
+}
+
+/* Cute Robot Drawing in Left Margin (Safe inside left padding) */
+.margin-robot {
+  position: absolute;
+  left: 0.6rem;
+  bottom: 4rem;
+  width: 36px;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 3;
+  transform: rotate(-4deg);
+}
+
+/* --- Footer & "Designed by" note --- */
+.notebook-footer {
+  margin-top: 3.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--font-doodle);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink-grey);
+  position: relative;
+  z-index: 5;
+  padding-top: 1rem;
+}
+
+.footer-credit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transform: rotate(-2deg);
+}
+
+.footer-avatar {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--ink-black);
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1.5px 2px 0 var(--ink-black);
+  overflow: hidden;
+}
+
+.footer-note {
+  font-size: 1.15rem;
+  transform: rotate(3deg);
+  color: #3b5998;
+}
+
+/* --- Interactive Doodle Canvas Mode Button --- */
+.doodle-mode-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #fff;
+  border: 3px solid var(--ink-black);
+  border-radius: 35px;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--font-sharpie);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 3px 5px 0 var(--ink-black);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  transition: all 0.2s;
+}
+
+.doodle-mode-btn:hover {
+  transform: scale(1.05) rotate(-2deg);
+  background: var(--accent-yellow);
+  box-shadow: 4px 7px 0 var(--ink-black);
+}
+
+/* Doodle Canvas Overlay */
+#scribble-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+body.is-drawing #scribble-canvas {
+  pointer-events: auto;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 28 L8 24 L26 6 C27 5 27 3 26 2 C25 1 23 1 22 2 L4 20 L0 28 Z' fill='%23161618' stroke='%23fff' stroke-width='1.5'/%3E%3Cpath d='M0 28 L4 28 L0 24 Z' fill='%23eb5f73'/%3E%3C/svg%3E") 0 28, crosshair !important;
+}
+
+/* --- Interactive Sparkle / Pencil Dust Cursor Trail --- */
+.cursor-sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-family: var(--font-doodle);
+  font-weight: 700;
+  animation: sparkle-fade 0.6s forwards cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes sparkle-fade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(-50%, -120%) scale(1.2) rotate(20deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -200%) scale(0.2) rotate(45deg);
+  }
+}
+
+.canvas-toolbar {
+  position: fixed;
+  top: 1rem;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  gap: 0.6rem;
+  z-index: 10000;
+  background: #fff;
+  padding: 8px 16px;
+  border: 3px solid var(--ink-black);
+  border-radius: 35px;
+  box-shadow: 4px 6px 0 var(--ink-black), 0 8px 25px rgba(0,0,0,0.15);
+  max-width: 95vw;
+  justify-content: center;
+}
+
+body.is-drawing .canvas-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tool-btn {
+  background: #fff;
+  border: 2px solid var(--ink-black);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-family: var(--font-sharpie);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 1.5px 2px 0 var(--ink-black);
+  transition: transform 0.1s;
+}
+
+.tool-btn:hover {
+  transform: translateY(-2px);
+  background: var(--accent-pink);
+}
+
+
+/* ==========================================================================
+   DESK STICKERS — position:fixed to bypass body overflow-x:hidden
+   Strategically placed with generous distance from the notebook
+   ========================================================================== */
+.desktop-workspace-items {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+
+.desk-item {
+  position: absolute;
+  pointer-events: auto;
+  z-index: 10;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.35s ease;
+}
+
+.desk-item:hover {
+  transform: scale(1.08) rotate(0deg) !important;
+  z-index: 150 !important;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+}
+
+/* --- Shared Label Pill --- */
+.desk-label {
+  font-family: var(--font-doodle);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  background: #fff;
+  padding: 3px 10px;
+  border: 2.5px solid var(--ink-black);
+  border-radius: 14px;
+  margin-top: 6px;
+  box-shadow: 2px 3px 0 var(--ink-black);
+  white-space: nowrap;
+}
+
+/* --- Professional slow-drift animations --- */
+@keyframes drift-1 {
+  0%   { transform: rotate(-6deg) translateY(0); }
+  50%  { transform: rotate(-4deg) translateY(-5px); }
+  100% { transform: rotate(-6deg) translateY(0); }
+}
+
+@keyframes drift-2 {
+  0%   { transform: rotate(7deg) translateY(0); }
+  50%  { transform: rotate(5deg) translateY(-4px); }
+  100% { transform: rotate(7deg) translateY(0); }
+}
+
+@keyframes drift-3 {
+  0%   { transform: rotate(3deg); }
+  50%  { transform: rotate(1deg); }
+  100% { transform: rotate(3deg); }
+}
+
+@keyframes drift-4 {
+  0%   { transform: rotate(10deg) translateY(0); }
+  50%  { transform: rotate(8deg) translateY(-5px); }
+  100% { transform: rotate(10deg) translateY(0); }
+}
+
+@keyframes drift-5 {
+  0%   { transform: rotate(-15deg); }
+  50%  { transform: rotate(-12deg); }
+  100% { transform: rotate(-15deg); }
+}
+
+@keyframes drift-6 {
+  0%   { transform: rotate(-5deg) translateY(0); }
+  50%  { transform: rotate(-3deg) translateY(-4px); }
+  100% { transform: rotate(-5deg) translateY(0); }
+}
+
+/* ──────────────────────────────────────────
+   1. TOP-LEFT: Polaroid photo
+   ────────────────────────────────────────── */
+.desk-polaroid {
+  top: 5%;
+  left: calc(50% - 610px);
+  width: 155px;
+  background: #fff;
+  padding: 7px 7px 16px 7px;
+  border: 2.5px solid var(--ink-black);
+  border-radius: 4px;
+  box-shadow: 5px 7px 18px rgba(0,0,0,0.13), 2px 3px 0 var(--ink-black);
+  text-align: center;
+  animation: drift-1 6s ease-in-out infinite;
+}
+
+.washi-tape {
+  position: absolute;
+  top: -10px;
+  left: 30px;
+  width: 65px;
+  height: 17px;
+  background: rgba(255, 214, 224, 0.9);
+  border: 1.5px solid rgba(22, 22, 24, 0.4);
+  transform: rotate(4deg);
+  border-radius: 1px;
+}
+
+.polaroid-inner {
+  width: 100%;
+  height: 95px;
+  background: #fdfaf3;
+  border: 2px solid var(--ink-black);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.polaroid-inner svg {
+  width: 90%;
+  height: 90%;
+}
+
+.polaroid-caption {
+  display: block;
+  font-family: var(--font-doodle);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  margin-top: 7px;
+}
+
+/* ──────────────────────────────────────────
+   2. TOP-RIGHT: Steaming Coffee Mug
+   ────────────────────────────────────────── */
+.desk-mug {
+  top: 8%;
+  right: calc(50% - 530px);
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: drift-2 7s ease-in-out infinite 0.5s;
+}
+
+.steam-container {
+  height: 24px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: -5px;
+  color: var(--ink-grey);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.steam {
+  display: inline-block;
+  animation: steam-rise 2.5s infinite ease-in-out alternate;
+}
+.steam-2 { animation-delay: 1s; }
+
+@keyframes steam-rise {
+  0% { transform: translateY(3px) scale(0.8); opacity: 0.25; }
+  100% { transform: translateY(-12px) scale(1.2); opacity: 0.7; }
+}
+
+.mug-svg {
+  width: 90px;
+  height: 90px;
+  filter: drop-shadow(3px 4px 0 var(--ink-black));
+}
+
+/* ──────────────────────────────────────────
+   3. MID-LEFT: Sticky Note
+   ────────────────────────────────────────── */
+.desk-sticky {
+  top: 35%;
+  left: calc(50% - 540px);
+  width: 170px;
+  background: #fff080;
+  padding: 14px 14px 16px 14px;
+  border: 2.5px solid var(--ink-black);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  box-shadow: 4px 8px 18px rgba(0,0,0,0.1), 3px 4px 0 var(--ink-black);
+  font-family: var(--font-doodle);
+  animation: drift-3 8s ease-in-out infinite 1s;
+}
+
+.sticky-pin {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.3rem;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.sticky-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  margin-bottom: 5px;
+  border-bottom: 2px dashed var(--ink-black);
+  padding-bottom: 3px;
+}
+
+.sticky-list {
+  list-style: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink-black);
+}
+
+.check-done {
+  color: #20b260;
+  font-weight: 700;
+  margin-right: 4px;
+}
+.check-wip {
+  color: #eb5f73;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.sticky-doodle {
+  text-align: center;
+  color: #eb5f73;
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+/* ──────────────────────────────────────────
+   4. MID-RIGHT: Retro Cassette Tape
+   ────────────────────────────────────────── */
+.desk-cassette {
+  top: 42%;
+  right: calc(50% - 615px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: drift-4 6.5s ease-in-out infinite 0.8s;
+}
+
+.desk-cassette svg {
+  width: 110px;
+  height: 72px;
+  filter: drop-shadow(3px 4px 0 var(--ink-black));
+}
+
+/* ──────────────────────────────────────────
+   5. BOTTOM-LEFT: Sketched Pencil
+   ────────────────────────────────────────── */
+.desk-pencil {
+  top: 73%;
+  left: calc(50% - 605px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: drift-5 7s ease-in-out infinite 1.5s;
+}
+
+.desk-pencil svg {
+  width: 175px;
+  height: 44px;
+  filter: drop-shadow(3px 4px 0 var(--ink-black));
+}
+
+/* ──────────────────────────────────────────
+   6. BOTTOM-RIGHT: Quality Stamp
+   ────────────────────────────────────────── */
+.desk-stamp {
+  top: 72%;
+  right: calc(50% - 535px);
+  animation: drift-6 5.5s ease-in-out infinite 2s;
+}
+
+.stamp-body {
+  background: #fff080;
+  border: 3px solid var(--ink-black);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: var(--font-sharpie);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  box-shadow: 3px 4px 0 var(--ink-black);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stamp-sub {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* ── Hide stickers on screens too narrow for side margins ── */
+@media (max-width: 1200px) {
+  .desktop-workspace-items {
+    display: none !important;
+  }
+}
+
+
+/* --- Responsive Layout for Mobile / Social Handles --- */
+@media (max-width: 650px) {
+  html, body {
+    padding: 1rem 0.5rem 5rem 0.5rem;
+  }
+
+  .notebook-sheet {
+    padding: 2rem 1.2rem 2.5rem 2.8rem;
+    transform: rotate(0deg);
+  }
+
+  .notebook-sheet::before {
+    left: 2.2rem;
+  }
+
+  .binder-holes {
+    left: 0.4rem;
+  }
+
+  .profile-header {
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-name {
+    font-size: 2rem;
+  }
+
+  .profile-bio {
+    font-size: 1.1rem;
+  }
+
+  .squiggly-btn {
+    font-size: 1.1rem;
+    padding: 0.7rem 1rem;
+    width: 100% !important;
+  }
+
+  .doodle-note {
+    font-size: 1.05rem;
+    justify-content: center !important;
+    text-align: center;
+    padding: 0;
+  }
+  
+  .hand-drawn-cursor {
+    display: none;
+  }
+
+  body.is-drawing .notebook-sheet {
+    margin-top: 4.8rem !important;
+  }
+
+  .canvas-toolbar {
+    top: 0.6rem;
+    bottom: auto;
+    padding: 6px 10px;
+    border-radius: 20px;
+    gap: 4px;
+  }
+}

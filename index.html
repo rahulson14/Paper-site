@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rahul Son Boro — Creative Sketchbook & Link-in-Bio</title>
+  <meta name="description" content="Hand-drawn notebook paper link-in-bio portfolio inspired by Kevin Basset. Connect with me across GitHub, LinkedIn, Twitter, Instagram, and check out my interactive projects.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📓</text></svg>">
+  
+  <!-- Custom Sketchbook CSS -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- DESK STICKERS — Scattered around the notebook like a real workspace -->
+  <div class="desktop-workspace-items">
+
+    <!-- 1. TOP-LEFT: Polaroid photo taped to desk -->
+    <div class="desk-item desk-polaroid" title="Late night coding vibes">
+      <div class="washi-tape"></div>
+      <div class="polaroid-inner">
+        <svg viewBox="0 0 100 80" fill="none" stroke="#161618" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="10" y="10" width="80" height="50" rx="4" fill="#fff080"/>
+          <line x1="20" y1="25" x2="40" y2="25" stroke-width="4" stroke="#eb5f73"/>
+          <line x1="20" y1="35" x2="60" y2="35"/>
+          <line x1="20" y1="45" x2="50" y2="45"/>
+          <path d="M 40 60 L 60 60 M 50 60 L 50 70 M 35 70 L 65 70"/>
+        </svg>
+      </div>
+      <span class="polaroid-caption">late night builds 🌙</span>
+    </div>
+
+    <!-- 2. TOP-RIGHT: Steaming coffee mug -->
+    <div class="desk-item desk-mug" title="Essential fuel for developers">
+      <div class="steam-container">
+        <span class="steam steam-1">♨</span>
+        <span class="steam steam-2">♨</span>
+      </div>
+      <svg class="mug-svg" viewBox="0 0 80 80" fill="none" stroke="#161618" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="35" cy="25" rx="25" ry="8" fill="#161618"/>
+        <path d="M 10 25 L 15 65 C 16 72 54 72 55 65 L 60 25 Z" fill="#fff"/>
+        <path d="M 60 35 C 75 35 75 55 60 55" fill="none" stroke-width="4"/>
+        <path d="M 22 45 Q 35 50 48 45" stroke="#eb5f73" stroke-width="3"/>
+      </svg>
+      <span class="desk-label">10x fuel ☕</span>
+    </div>
+
+    <!-- 3. MID-LEFT: Daily goals sticky note -->
+    <div class="desk-item desk-sticky" title="Daily coding checklist">
+      <div class="sticky-pin">📍</div>
+      <h3 class="sticky-title">📌 Daily Goals:</h3>
+      <ul class="sticky-list">
+        <li><span class="check-done">✓</span> Write clean code</li>
+        <li><span class="check-done">✓</span> Drink coffee ☕</li>
+        <li><span class="check-wip">◐</span> Ship 10x apps! 🚀</li>
+      </ul>
+      <div class="sticky-doodle">〰️ ♥ 〰️</div>
+    </div>
+
+    <!-- 4. MID-RIGHT: Retro cassette tape -->
+    <div class="desk-item desk-cassette" title="Lo-fi coding beats">
+      <svg viewBox="0 0 100 65" fill="none" stroke="#161618" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="5" width="90" height="55" rx="6" fill="#ffd6e0"/>
+        <rect x="15" y="15" width="70" height="25" rx="4" fill="#fff"/>
+        <circle cx="32" cy="27" r="7" fill="#161618"/>
+        <circle cx="68" cy="27" r="7" fill="#161618"/>
+        <line x1="40" y1="27" x2="60" y2="27" stroke-width="2.5" stroke="#eb5f73"/>
+        <path d="M 25 48 L 75 48 L 70 56 L 30 56 Z" fill="#fff080"/>
+      </svg>
+      <span class="desk-label">lo-fi beats 🎧</span>
+    </div>
+
+    <!-- 5. BOTTOM-LEFT: Sketched wooden pencil -->
+    <div class="desk-item desk-pencil" title="Always sketching ideas">
+      <svg viewBox="0 0 160 40" fill="none" stroke="#161618" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="10,20 35,10 35,30" fill="#fff080"/>
+        <polygon points="10,20 20,16 20,24" fill="#161618"/>
+        <rect x="35" y="10" width="90" height="20" fill="#ffd6e0"/>
+        <line x1="35" y1="17" x2="125" y2="17" stroke-width="2"/>
+        <line x1="35" y1="23" x2="125" y2="23" stroke-width="2"/>
+        <rect x="125" y="10" width="12" height="20" fill="#cacae0"/>
+        <path d="M 137 10 C 150 10 150 30 137 30 Z" fill="#eb5f73"/>
+      </svg>
+      <span class="desk-label">sketch ideas ✏️</span>
+    </div>
+
+    <!-- 6. BOTTOM-RIGHT: Quality stamp -->
+    <div class="desk-item desk-stamp" title="10x developer certified">
+      <div class="stamp-body">
+        <span>⭐ 10x quality ⭐</span>
+        <span class="stamp-sub">certified 🚀</span>
+      </div>
+    </div>
+
+  </div>
+  <!-- The Main Notebook Sheet Container -->
+  <main class="notebook-sheet">
+    
+    <!-- Interactive Doodle Canvas Overlay -->
+    <canvas id="scribble-canvas"></canvas>
+
+    <!-- Canvas Toolbar (Only visible when drawing) -->
+    <div class="canvas-toolbar">
+      <button class="tool-btn color-pick-btn" data-color="#161618" data-width="3.5" style="background: #161618; color: #fff;">🖤 Sharpie</button>
+      <button class="tool-btn color-pick-btn" data-color="#eb5f73" data-width="4" style="background: #eb5f73; color: #fff;">❤️ Red Marker</button>
+      <button class="tool-btn color-pick-btn" data-color="#2b5c8f" data-width="4.5" style="background: #87b4eb; color: #161618;">💙 Blue Pen</button>
+      <button class="tool-btn color-pick-btn" data-color="#20b260" data-width="4" style="background: #a8f0ca; color: #161618;">💚 Highlighter</button>
+      <button id="clear-canvas-btn" class="tool-btn" style="background: #ffd6e0;">🗑️ Erase Page</button>
+    </div>
+
+    <!-- Binder Punch Holes on Left Margin -->
+    <div class="binder-holes">
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+    </div>
+
+    <!-- Cute Robot Drawing in Left Margin (Safe within left inner padding) -->
+    <div class="margin-robot" title="Beep boop! I build autonomous bots.">
+      <svg viewBox="0 0 100 120" fill="none" stroke="#4a4a52" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="25" y="20" width="50" height="40" rx="6" fill="#f3f3f6"/>
+        <circle cx="40" cy="38" r="5" fill="#161618"/>
+        <circle cx="60" cy="38" r="5" fill="#161618"/>
+        <line x1="45" y1="50" x2="55" y2="50"/>
+        <!-- Antenna -->
+        <line x1="50" y1="20" x2="50" y2="5"/>
+        <circle cx="50" cy="5" r="4" fill="#eb5f73"/>
+        <!-- Body -->
+        <rect x="30" y="65" width="40" height="40" rx="4" fill="#fff"/>
+        <line x1="30" y1="75" x2="10" y2="85"/>
+        <line x1="70" y1="75" x2="90" y2="65"/>
+        <!-- Legs -->
+        <line x1="40" y1="105" x2="40" y2="118"/>
+        <line x1="60" y1="105" x2="60" y2="118"/>
+      </svg>
+    </div>
+
+    <!-- PROFILE HEADER -->
+    <header class="profile-header">
+      <!-- Hand-drawn squiggly frame around avatar -->
+      <div class="avatar-frame" title="Hello! I'm Rahul.">
+        <!-- Authentic hand-sketched ink caricature SVG avatar -->
+        <svg class="avatar-svg" viewBox="0 0 100 100" fill="none" stroke="#161618" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Face background -->
+          <circle cx="50" cy="50" r="42" fill="#fff080"/>
+          <!-- Glasses -->
+          <circle cx="36" cy="45" r="11" fill="#fff" stroke-width="3.2"/>
+          <circle cx="64" cy="45" r="11" fill="#fff" stroke-width="3.2"/>
+          <line x1="47" y1="45" x2="53" y2="45" stroke-width="3.5"/>
+          <line x1="25" y1="43" x2="13" y2="39" stroke-width="3"/>
+          <line x1="75" y1="43" x2="87" y2="39" stroke-width="3"/>
+          <!-- Eyes -->
+          <circle cx="36" cy="45" r="3.5" fill="#161618"/>
+          <circle cx="64" cy="45" r="3.5" fill="#161618"/>
+          <!-- Nose & Smile -->
+          <path d="M 50 49 L 48 55 L 52 55" stroke-width="2.5"/>
+          <path d="M 36 67 Q 50 82 64 67" stroke-width="3.8" fill="none"/>
+          <!-- Beard / Hair texture -->
+          <path d="M 22 36 Q 50 12 78 36" stroke-width="4"/>
+          <path d="M 38 87 Q 50 91 62 87" stroke-width="2.5" stroke-dasharray="2 4"/>
+        </svg>
+      </div>
+
+      <div class="profile-titles">
+        <h1 class="profile-name">RAHUL Son Boro</h1>
+        <p class="profile-bio">Software Engineer/Builder Based In India 🚀</p>
+      </div>
+    </header>
+
+    <!-- THE SQUIGGLY LINK BUTTONS (PROFESSIONAL PRIORITY ORDER WITH STYLED TWO-LINE TYPOGRAPHY) -->
+    <ul class="links-list">
+      
+      <!-- PRIORITY 1: Interactive Portfolio (Highlighted yellow with Snail ink icon + Hand Drawn Cursor!) -->
+      <li class="link-item">
+        <div class="doodle-note note-portfolio">
+          <span class="badge-tag">✨ explore my favorite builds & web apps ⤵</span>
+        </div>
+        
+        <a href="https://github.com/nostalgic-css/NES.css" target="_blank" rel="noopener" class="squiggly-btn is-highlight">
+          <span class="btn-ink-icon">
+            <!-- Sketched Snail / Fortune Cookie -->
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/>
+              <path d="M8.5 8.5v.01"/>
+              <path d="M16 12l2 2"/>
+            </svg>
+          </span>
+          <span class="btn-text">
+            <span class="btn-title">Interactive Portfolio</span>
+            <span class="btn-subtitle">explore my latest builds & projects 🚀</span>
+          </span>
+        </a>
+
+        <!-- Hand-drawn mouse cursor pointing at button -->
+        <div class="hand-drawn-cursor" title="Click me!">
+          <svg viewBox="0 0 30 30" fill="none" stroke="#161618" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M 5 5 L 5 22 L 10 17 L 15 25 L 18 23 L 13 15 L 20 15 Z" fill="#fff"/>
+          </svg>
+        </div>
+      </li>
+
+      <!-- PRIORITY 2: Connect on LinkedIn (Sketched 'in' / briefcase icon) -->
+      <li class="link-item">
+        <a href="https://www.linkedin.com/in/rahulsonboro/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B1SQ1ZOv9QSKSg473XxTZTQ%3D%3D" target="_blank" rel="noopener" class="squiggly-btn is-shaded">
+          <span class="btn-ink-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </span>
+          <span class="btn-text">
+            <span class="btn-title">LinkedIn</span>
+            <span class="btn-subtitle">let's connect professionally 💼</span>
+          </span>
+        </a>
+      </li>
+
+      <!-- PRIORITY 3: GitHub Handle (Sketched Octocat/Code icon) -->
+      <li class="link-item">
+        <a href="https://github.com/rahulson14" target="_blank" rel="noopener" class="squiggly-btn">
+          <span class="btn-ink-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+            </svg>
+          </span>
+          <span class="btn-text">
+            <span class="btn-title">GitHub</span>
+            <span class="btn-subtitle">@rahulson14 · open source code 🐙</span>
+          </span>
+        </a>
+      </li>
+
+      <!-- PRIORITY 4: Blog / Thoughts (Concentric spiral ink icon) -->
+      <li class="link-item">
+        <a href="https://dev.to" target="_blank" rel="noopener" class="squiggly-btn is-shaded">
+          <span class="btn-ink-icon">
+            <!-- Sketched spiral / concentric circles -->
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="6"/>
+              <circle cx="12" cy="12" r="2"/>
+            </svg>
+          </span>
+          <span class="btn-text">
+            <span class="btn-title">Engineering Blog</span>
+            <span class="btn-subtitle">articles, tutorials & thoughts ✍️</span>
+          </span>
+        </a>
+      </li>
+
+      <!-- PRIORITY 5: Direct Email (Envelope icon) -->
+      <li class="link-item">
+        <div class="doodle-note note-email">
+          <span class="badge-tag">⚡ open for new ideas, invites & greetings 💌</span>
+        </div>
+        <a href="#" id="btn-email" data-email="rahulsonboro@gmail.com" class="squiggly-btn" title="Click to copy email">
+          <span class="btn-ink-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </span>
+          <span class="btn-text">
+            <span class="btn-title">Direct Email</span>
+            <span class="btn-subtitle">rahulsonboro@gmail.com 💌</span>
+          </span>
+        </a>
+      </li>
+
+      <!-- PRIORITY 6: Twitter / X Handle (Sketched Bird icon) -->
+      <li class="link-item">
+        <a href="https://x.com/rahulsonboro" target="_blank" rel="noopener" class="squiggly-btn is-shaded">
+          <span class="btn-ink-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+            </svg>
+          </span>
+          <span class="btn-text">
+            <span class="btn-title">X (Twitter)</span>
+            <span class="btn-subtitle">@rahulsonboro · tech discussions 💭</span>
+          </span>
+        </a>
+      </li>
+
+      <!-- PRIORITY 7: Instagram Handle (Sketched Camera icon) -->
+      <li class="link-item">
+        <a href="https://www.instagram.com/rahulsonboro/" target="_blank" rel="noopener" class="squiggly-btn">
+          <span class="btn-ink-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </span>
+          <span class="btn-text">
+            <span class="btn-title">Instagram</span>
+            <span class="btn-subtitle">@rahulsonboro · lifestyle & snaps 📸</span>
+          </span>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- NOTEBOOK FOOTER CREDIT (Exactly like Kevin's "design by Kyra -> That's me I'm 6") -->
+    <footer class="notebook-footer">
+      <div class="footer-credit">
+        <span>design by</span>
+        <div class="footer-avatar">
+          <!-- Mini avatar sketch -->
+          <svg viewBox="0 0 40 40" fill="none" stroke="#161618" stroke-width="2.5">
+            <circle cx="20" cy="20" r="16" fill="#fff080"/>
+            <circle cx="15" cy="18" r="2" fill="#161618"/>
+            <circle cx="25" cy="18" r="2" fill="#161618"/>
+            <path d="M 15 26 Q 20 31 25 26" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span>Rahul</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Sticky Doodle Canvas Toggle Button -->
+  <button id="toggle-doodle-mode" class="doodle-mode-btn" title="Click to draw your own sharpie scribbles on this notebook!">
+    ✏️ Doodle on Paper!
+  </button>
+
+  <!-- Interactive Script -->
+  <script src="app.js"></script>
+</body>
+</html>
